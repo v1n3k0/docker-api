@@ -1,0 +1,21 @@
+version: '3'
+volumes:
+  dados:
+services:
+  cache:
+    image: redis:6.2-alpine
+    ports:
+      - 6379:6379
+  db:
+    image: "mcr.microsoft.com/mssql/server"
+    environment:
+      SA_PASSWORD: "Password123"
+      ACCEPT_EULA: "Y"
+    ports:
+      - 1433:1433
+  cadastro:
+    build: Cadastro/Cadastro
+    ports:
+      - 80:80
+      - 8000:8000
+      - 443:443
