@@ -4,7 +4,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 EXPOSE 8000 80 443
 
-ENV applicationUrl=http://+:8000;http://+:80;https://+:443;
+# ENV applicationUrl=http://+:8000;http://+:80;https://+:443;
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src

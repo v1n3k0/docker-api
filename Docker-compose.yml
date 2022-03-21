@@ -15,6 +15,8 @@ services:
       - 1433:1433
   cadastro:
     build: Cadastro/Cadastro
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
     ports:
       - 80:80
       - 8000:8000
