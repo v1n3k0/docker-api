@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadastro", "Cadastro\Cadastro.csproj", "{3563A151-FAF9-4EB5-872F-20F0E1DBF355}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cadastro", "Cadastro\Cadastro.csproj", "{B8E98A40-F1A9-41EB-8821-995231911285}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3563A151-FAF9-4EB5-872F-20F0E1DBF355}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3563A151-FAF9-4EB5-872F-20F0E1DBF355}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3563A151-FAF9-4EB5-872F-20F0E1DBF355}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3563A151-FAF9-4EB5-872F-20F0E1DBF355}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8E98A40-F1A9-41EB-8821-995231911285}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8E98A40-F1A9-41EB-8821-995231911285}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8E98A40-F1A9-41EB-8821-995231911285}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8E98A40-F1A9-41EB-8821-995231911285}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {E4213D8E-4397-43DC-8A0E-D1C42AF9BE39}
+		SolutionGuid = {8AC532D1-BF83-4B02-BF0D-C30288A600B6}
 	EndGlobalSection
 EndGlobal
