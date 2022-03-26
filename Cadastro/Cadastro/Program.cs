@@ -1,41 +1,15 @@
-using Cadastro;
 using Cadastro.Models;
-using Cadastro.Repository;
-using Cadastro.Service;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
+using Cadastro.UseCase;
 using System.Security.Claims;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-var key = Encoding.ASCII.GetBytes(Settings.Secret);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddAuthentication(x =>
-{
-    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(x =>
-{
-    x.RequireHttpsMetadata = false;
-    x.SaveToken = true;
-    x.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(key),
-        ValidateIssuer = false,
-        ValidateAudience = false,
-    };
-});
-
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("Admin", policy => policy.RequireRole("manager"));
-    options.AddPolicy("Employee", policy => policy.RequireRole("employee"));
-});
+builder.Services.AuthenticationConfiguration();
+builder.Services.ProgramConfiguration();
 
 var app = builder.Build();
 
@@ -52,21 +26,17 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 
-app.MapPost("/login", (User model) =>
+app.MapPost("/login", (User model, ILoginUseCase usecase) =>
  {
-     var user = UserRepository.Get(model.Username, model.Password);
+     var user = usecase.ExecuteAsync(model);
 
      if(user is null)
          return Results.NotFound(new {message = "Inválido username or password"});
 
-     var token = TokenService.GenerateToken(user);
-
-     user.Password = string.Empty;
 
      return Results.Ok(new
      {
-         user = user,
-         token = token
+         user
      });
  });
 
@@ -74,17 +44,17 @@ app.MapGet("/anonymous", () => Results.Ok("Anonymous")).AllowAnonymous();
 
 app.MapGet("/autenticated", (ClaimsPrincipal user) =>
  {
-     return Results.Ok($"Authenticated as {user.Identity.Name}");
+     return Results.Ok($"Authenticated as {user.Identity?.Name}");
  }).RequireAuthorization();
 
 app.MapGet("/manager", (ClaimsPrincipal user) =>
 {
-    return Results.Ok($"Authenticated as {user.Identity.Name}");
+    return Results.Ok($"Authenticated as {user.Identity?.Name}");
 }).RequireAuthorization("Admin");
 
 app.MapGet("/employee", (ClaimsPrincipal user) =>
 {
-    return Results.Ok($"Authenticated as {user.Identity.Name}");
+    return Results.Ok($"Authenticated as {user.Identity?.Name}");
 }).RequireAuthorization("Employee");
 
 app.Run();
