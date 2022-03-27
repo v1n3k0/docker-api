@@ -7,8 +7,8 @@ public static class Authentication
 {
     public static IServiceCollection AuthenticationConfiguration(this IServiceCollection services)
     {
-
-        var key = Encoding.ASCII.GetBytes(Settings.Secret);
+        var variable = Environment.GetEnvironmentVariable(Settings.Secret) ?? string.Empty;
+        var key = Encoding.ASCII.GetBytes(variable);
         services.AddAuthentication(x =>
         {
             x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

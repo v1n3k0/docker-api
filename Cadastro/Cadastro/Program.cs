@@ -26,7 +26,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 
-app.MapPost("/login", (User model, ILoginUseCase usecase) =>
+app.MapPost("/login", (UserModel model, ILoginUseCase usecase) =>
  {
      var user = usecase.ExecuteAsync(model);
 

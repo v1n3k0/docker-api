@@ -8,10 +8,11 @@ namespace Cadastro.Service
 {
     public static class TokenService
     {
-        public static string GenerateToken(User user)
+        public static string GenerateToken(UserModel user)
         {
+            var variable = Environment.GetEnvironmentVariable(Settings.Secret) ?? string.Empty;
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(Settings.Secret);
+            var key = Encoding.ASCII.GetBytes(variable);
             var tokenDescriptor = new SecurityTokenDescriptor {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
