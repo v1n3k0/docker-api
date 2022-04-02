@@ -21,9 +21,12 @@ namespace Cadastro.UseCase
                 return null;
 
             var token = TokenService.GenerateToken(user);
+            var refreshToken = TokenService.GenerateRefreshToken();
+            TokenService.SaveRefreshToken(user.Username, refreshToken);
 
             user.Token = token;
             user.Password = string.Empty;
+            user.RefreshToken = refreshToken;
 
             return user;
         }

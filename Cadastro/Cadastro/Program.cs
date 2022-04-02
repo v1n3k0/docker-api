@@ -34,6 +34,14 @@ app.MapPost("/login", async (UserModel model, ILoginUseCase usecase) =>
  .Produces<UserModel>(StatusCodes.Status200OK)
  .Produces(StatusCodes.Status404NotFound);
 
+app.MapPost("/refresh", (RefreshTokenModel model, IRefreshTokenUseCase usecase) =>
+ usecase.Execute(model)
+ is RefreshTokenModel refreshToken
+ ? Results.Ok(refreshToken)
+ : Results.NotFound())
+ .Produces<RefreshTokenModel>(StatusCodes.Status200OK)
+ .Produces(StatusCodes.Status404NotFound);
+
 app.MapGet("/anonymous", () => Results.Ok("Anonymous")).AllowAnonymous();
 
 app.MapGet("/autenticated", (ClaimsPrincipal user) =>

@@ -9,6 +9,7 @@ public static class DependecyInjection
         services.AddScoped<ILoginUseCase, LoginUseCase>();
         services.AddTransient<IDbConnection>(x => new System.Data.SqlClient.SqlConnection("Server=localhost;Database=Cadastro;User Id=sa;Password=Password123"));
         services.AddTransient<IUserRepository, UserRepository>();
+        services.AddTransient<IRefreshTokenUseCase, RefreshTokenUseCase>();
 
         return services;
     }

@@ -2,7 +2,7 @@
 
 namespace Cadastro.UseCase
 {
-    public interface ILoginUseCase: IUseCase<UserModel,UserModel>
+    public interface ILoginUseCase: IUseCaseAsync<UserModel,UserModel>
     {
     }
 }
