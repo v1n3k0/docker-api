@@ -4,7 +4,7 @@ using System.Data;
 
 namespace Cadastro.Repository
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
         private IDbConnection connection;
         public UserRepository(IDbConnection db)
@@ -12,23 +12,21 @@ namespace Cadastro.Repository
             connection = db;
         }
 
-        public static UserModel Get(string username, string password)
-        {
-            var users = new List<UserModel>
-            {
-                new UserModel { Id = 1, Username = "batman", Password = "123456", Role = "manager" },
-                new UserModel { Id = 1, Username = "robin", Password = "123456", Role = "employee" },
-            };
-
-            return users.FirstOrDefault(x => x.Username.Equals(username.ToLower()) && x.Password.Equals(password.ToLower()));
-        }
-
         public async Task<UserModel> GetAsync(string username, string password)
         {
-            var query = "";
+            var query = @"SELECT [IDUSUARIO] as Id
+                  ,[NOME] as Username
+                  ,[SENHA] as Password
+                  ,[REGRA] as Role
+                  ,[CODIGO] as Code
+              FROM[dbo].[USUARIO]
+              where NOME like @username and SENHA like @password";
 
+            var param = new DynamicParameters();
+            param.Add("username", username);
+            param.Add("password", password);
 
-            var result = await connection.QueryFirstOrDefaultAsync<UserModel>(query);
+            var result = await connection.QueryFirstOrDefaultAsync<UserModel>(query, param);
 
             return result;
         }

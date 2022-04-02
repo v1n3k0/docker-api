@@ -6,9 +6,16 @@ namespace Cadastro.UseCase
 {
     public class LoginUseCase : ILoginUseCase
     {
-        public UserModel? ExecuteAsync(UserModel request)
+        private readonly IUserRepository userRepository;
+
+        public LoginUseCase(IUserRepository userRepository)
         {
-            var user = UserRepository.Get(request.Username, request.Password);
+            this.userRepository = userRepository;
+        }
+
+        public async Task<UserModel> ExecuteAsync(UserModel request)
+        {
+            var user = await userRepository.GetAsync(request.Username, request.Password);
 
             if(user == null)
                 return null;

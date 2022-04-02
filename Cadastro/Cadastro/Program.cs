@@ -26,19 +26,13 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 
-app.MapPost("/login", (UserModel model, ILoginUseCase usecase) =>
- {
-     var user = usecase.ExecuteAsync(model);
-
-     if(user is null)
-         return Results.NotFound(new {message = "Inválido username or password"});
-
-
-     return Results.Ok(new
-     {
-         user
-     });
- });
+app.MapPost("/login", async (UserModel model, ILoginUseCase usecase) =>
+ await usecase.ExecuteAsync(model)
+ is UserModel user
+ ? Results.Ok(user)
+ : Results.NotFound())
+ .Produces<UserModel>(StatusCodes.Status200OK)
+ .Produces(StatusCodes.Status404NotFound);
 
 app.MapGet("/anonymous", () => Results.Ok("Anonymous")).AllowAnonymous();
 
