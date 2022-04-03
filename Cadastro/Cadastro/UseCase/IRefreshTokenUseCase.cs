@@ -2,7 +2,7 @@
 
 namespace Cadastro.UseCase
 {
-    public interface IRefreshTokenUseCase : IUseCase<RefreshTokenModel, RefreshTokenModel>
+    public interface IRefreshTokenUseCase : IUseCaseAsync<RefreshTokenModel, RefreshTokenModel>
     {
     }
 }

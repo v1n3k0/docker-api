@@ -6,23 +6,30 @@ namespace Cadastro.UseCase
 {
     public class LoginUseCase : ILoginUseCase
     {
-        private readonly IUserRepository userRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly ITokenService _tokenService;
+        private readonly IRefreshTokenRepository _refreshTokenRepository;
 
-        public LoginUseCase(IUserRepository userRepository)
+        public LoginUseCase(
+            IUserRepository userRepository,
+            ITokenService tokenService,
+            IRefreshTokenRepository refreshTokenRepository)
         {
-            this.userRepository = userRepository;
+            _userRepository = userRepository;
+            _tokenService = tokenService;
+            _refreshTokenRepository = refreshTokenRepository;
         }
 
         public async Task<UserModel> ExecuteAsync(UserModel request)
         {
-            var user = await userRepository.GetAsync(request.Username, request.Password);
+            var user = await _userRepository.GetAsync(request.Username, request.Password);
 
             if(user == null)
                 return null;
 
-            var token = TokenService.GenerateToken(user);
-            var refreshToken = TokenService.GenerateRefreshToken();
-            TokenService.SaveRefreshToken(user.Username, refreshToken);
+            var token = _tokenService.GenerateToken(user);
+            var refreshToken = _tokenService.GenerateRefreshToken();
+            await _refreshTokenRepository.SetAsync(user.Username, refreshToken);
 
             user.Token = token;
             user.Password = string.Empty;
