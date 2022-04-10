@@ -20,11 +20,13 @@ services:
   cadastro:
     build: Cadastro/Cadastro
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ASPNETCORE_Kestrel__Certificates__Default__Password=dockerapi
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
       - SecretsJWT=F748F2EE-BB87-49CB-A064-8E898B34E32C
+      - DbUser=sa
+      - DbPassword=Password123
     ports:
       - 80:80
       - 443:443

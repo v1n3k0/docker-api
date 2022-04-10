@@ -26,7 +26,9 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "SecretsJWT": "F748F2EE-BB87-49CB-A064-8E898B34E32C"
+        "SecretsJWT": "F748F2EE-BB87-49CB-A064-8E898B34E32C",
+        "DbUser": "sa",
+        "DbPassword": "Password123"
       }
     },
     "Docker": {
@@ -35,6 +37,15 @@
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
       "publishAllPorts": true,
       "useSSL": true
+    },
+    "Production": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production",
+        "SecretsJWT": "F748F2EE-BB87-49CB-A064-8E898B34E32C"
+      }
     }
   }
 }
