@@ -21,10 +21,14 @@ namespace Cadastro.UseCase
         public async Task<RefreshTokenModel> ExecuteAsync(RefreshTokenModel request)
         {
             var principal = _tokenService.GetPrincipalFromExpiredToken(request.Token);
-            var username = principal.Identity.Name;
+            var username = principal.Identity?.Name;
+            if (string.IsNullOrEmpty(username))
+                throw new SecurityTokenException("Invalid token");
+
             var savedRefreshToken = await _refreshTokenRepository.GetAsync(username);
             if (savedRefreshToken != request.RefreshToken)
                 throw new SecurityTokenException("Invalid refresh token");
+
             var newJwtToken = _tokenService.GenerateToken(principal.Claims);
             var newRefreshToken = _tokenService.GenerateRefreshToken();
             await _refreshTokenRepository.DeleteAsync(username);

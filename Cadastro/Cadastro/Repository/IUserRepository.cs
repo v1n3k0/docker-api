@@ -1,7 +1,7 @@
-﻿using Cadastro.Models;
+﻿using Cadastro.Entity;
 
 public interface IUserRepository
 {
-    Task<UserModel> GetAsync(string username, string password);
+    Task<UserEntity> GetAsync(string username, string password);
 }
 

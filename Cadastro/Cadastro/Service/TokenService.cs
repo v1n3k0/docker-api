@@ -1,5 +1,5 @@
 ﻿using Cadastro;
-using Cadastro.Models;
+using Cadastro.Entity;
 using Cadastro.Service;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -9,7 +9,7 @@ using System.Text;
 
 public class TokenService : ITokenService
 {
-    public string GenerateToken(UserModel user)
+    public string GenerateToken(UserEntity user)
     {
         var variable = Environment.GetEnvironmentVariable(Settings.Secret) ?? string.Empty;
         var tokenHandler = new JwtSecurityTokenHandler();
@@ -18,7 +18,7 @@ public class TokenService : ITokenService
         {
             Subject = new ClaimsIdentity(new Claim[]
             {
-                    new Claim(ClaimTypes.Name, user.Username),
+                    new Claim(ClaimTypes.Name, user.Name),
                     new Claim(ClaimTypes.Role, user.Role)
             }),
             Expires = DateTime.UtcNow.AddHours(2),

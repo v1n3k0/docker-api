@@ -1,4 +1,4 @@
-﻿using Cadastro.Models;
+﻿using Cadastro.Entity;
 using Dapper;
 using System.Data;
 
@@ -12,10 +12,10 @@ namespace Cadastro.Repository
             connection = db;
         }
 
-        public async Task<UserModel> GetAsync(string username, string password)
+        public async Task<UserEntity> GetAsync(string username, string password)
         {
             var query = @"SELECT [IDUSUARIO] as Id
-                  ,[NOME] as Username
+                  ,[NOME] as Name
                   ,[SENHA] as Password
                   ,[REGRA] as Role
                   ,[CODIGO] as Code
@@ -26,7 +26,7 @@ namespace Cadastro.Repository
             param.Add("username", username);
             param.Add("password", password);
 
-            var result = await connection.QueryFirstOrDefaultAsync<UserModel>(query, param);
+            var result = await connection.QueryFirstOrDefaultAsync<UserEntity>(query, param);
 
             return result;
         }
